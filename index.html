@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astral Client — Next Generation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #00e5ff;
+            --bg-dark: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: white; overflow-x: hidden; }
+
+        .video-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #112233 0%, #050505 100%);
+        }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 8%; position: fixed; width: 100%; z-index: 1000;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 24px; font-weight: 900; color: var(--accent); letter-spacing: 2px; }
+        .nav-right { display: flex; align-items: center; gap: 25px; }
+        .nav-links a { text-decoration: none; color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 600; margin-left: 20px; transition: 0.3s; cursor: pointer; }
+        .nav-links a:hover { color: var(--accent); }
+        
+        .auth-btn { background: var(--accent); color: black !important; padding: 10px 22px; border-radius: 6px; font-weight: 800; cursor: pointer; border: none; font-size: 12px; }
+
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .btn-buy-main {
+            padding: 18px 50px; background: var(--accent); color: black;
+            text-decoration: none; font-weight: 900; border-radius: 10px;
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.4); border: none; cursor: pointer;
+        }
+        .btn-buy-main:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(0, 229, 255, 0.6); }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; max-width: 1200px; margin: 40px auto; padding: 40px 8%; }
+        .price-card { background: var(--glass); border: 1px solid var(--border); padding: 40px 25px; border-radius: 20px; text-align: center; transition: 0.3s; }
+        .price-card:hover { border-color: var(--accent); background: rgba(0, 229, 255, 0.03); }
+        .price-val { font-size: 32px; font-weight: 900; margin: 15px 0; color: var(--accent); }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: white; color: black; width: 400px; padding: 40px; border-radius: 16px; text-align: center; position: relative; }
+        
+        .role-badge { display: inline-block; padding: 6px 16px; border-radius: 6px; font-weight: 800; font-size: 12px; text-transform: uppercase; min-width: 100px; text-align: center; }
+        .buyer { background: #ffb703; color: black; }
+
+        .input-field { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        .primary-btn { width: 100%; padding: 14px; background: #4285F4; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .primary-btn:hover { opacity: 0.9; }
+        
+        .profile-card-modal { background: #1a1a1a !important; color: white !important; }
+        .buy-link { display: block; padding: 15px; margin: 10px 0; background: #f0f0f0; border-radius: 8px; text-decoration: none; color: black; font-weight: 700; transition: 0.3s; }
+        .buy-link:hover { background: #e0e0e0; }
+    </style>
+</head>
+<body>
+
+    <div class="video-bg"></div>
+
+    <nav>
+        <div class="logo">ASTRAL</div>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#">Головна</a>
+                <a href="#prices">Ціни</a>
+                <a href="https://discord.gg/nCB3WsvfME" id="nav-disc" target="_blank">Discord</a>
+                <a id="nav-prof" style="display:none;" onclick="openM('modal-profile')">Профіль</a>
+            </div>
+            <button class="auth-btn" id="btn-login" onclick="openM('modal-auth')">Вхід / Реєстрація</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 style="font-size: clamp(40px, 8vw, 70px); margin-bottom: 20px;">ASTRAL <span style="color: var(--accent);">CLIENT</span></h1>
+        <p style="margin-bottom: 30px; opacity: 0.7; max-width: 600px;">Найкращий інструмент для нового покоління гравців. Швидкість, безпека та астральний досвід.</p>
+        <button class="btn-buy-main" onclick="openM('modal-buy')">Купити зараз</button>
+    </section>
+
+    <div class="pricing-grid" id="prices">
+        <div class="price-card"><h3>30 Днів</h3><div class="price-val">299 ₽</div><small>₴155 | $3.69</small></div>
+        <div class="price-card"><h3>90 Днів</h3><div class="price-val">399 ₽</div><small>₴207 | $4.95</small></div>
+        <div class="price-card"><h3>1 Рік</h3><div class="price-val">449 ₽</div><small>₴230 | $5.55</small></div>
+        <div class="price-card" style="border: 2px solid var(--accent);"><h3>Lifetime</h3><div class="price-val">599 ₽</div><small>₴311 | $7.40</small></div>
+    </div>
+
+    <div class="modal" id="modal-buy">
+        <div class="modal-content">
+            <h2>Оплатити доступ</h2>
+            <p style="margin-bottom: 15px; font-size: 14px; color: #666;">Виберіть зручний спосіб оплати</p>
+            <a href="https://funpay.com/users/12045083/" target="_blank" class="buy-link"><i class="fa-solid fa-cart-shopping"></i> FunPay</a>
+            <a href="https://t.me/Kopyy123" target="_blank" class="buy-link"><i class="fa-brands fa-telegram"></i> Telegram (@Kopyy123)</a>
+            <button onclick="closeM('modal-buy')" style="margin-top:10px; background:none; border:none; cursor:pointer; color: #888;">Закрити</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-auth">
+        <div class="modal-content">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" style="width: 40px;">
+            <h2 style="margin: 15px 0;">Реєстрація</h2>
+            <input type="text" id="reg-name" placeholder="Ваше ім'я" class="input-field">
+            <input type="email" id="reg-email" placeholder="Ваш Gmail" class="input-field">
+            <button class="primary-btn" onclick="sendCode()">Отримати код</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-code">
+        <div class="modal-content">
+            <h2>Підтвердження</h2>
+            <p style="font-size: 14px; color: #666; margin: 10px 0;">Код відправлено (імітація: 1234)</p>
+            <input type="text" id="verify-code" placeholder="Введіть 1234" class="input-field" maxlength="4">
+            <button class="primary-btn" onclick="verifyAndLogin()">Підтвердити</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-profile">
+        <div class="modal-content profile-card-modal">
+            <h2 style="color: var(--accent);">Мій Профіль</h2>
+            <div style="margin: 20px 0; text-align: left; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px;">
+                <p>Ім'я: <strong id="prof-name"></strong></p>
+                <p>Пошта: <span id="prof-email" style="opacity: 0.7;"></span></p>
+                <p style="margin-top: 15px;">Ваша роль: <span class="role-badge buyer">BUYER</span></p>
+            </div>
+            <button class="primary-btn" style="background: #ff4d6d;" onclick="logout()">Вийти з акаунта</button>
+            <button onclick="closeM('modal-profile')" style="margin-top:15px; background:none; border:none; color:gray; cursor:pointer;">Закрити</button>
+        </div>
+    </div>
+
+    <script>
+        function openM(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeM(id) { document.getElementById(id).style.display = 'none'; }
+
+        window.onload = function() {
+            const savedUser = localStorage.getItem('astral_user');
+            if(savedUser) { applyLogin(JSON.parse(savedUser)); }
+        };
+
+        function sendCode() {
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            if(!name || !email) return alert("Заповни всі поля!");
+            closeM('modal-auth');
+            openM('modal-code');
+        }
+
+        function verifyAndLogin() {
+            const code = document.getElementById('verify-code').value;
+            if(code === "1234") {
+                const userData = {
+                    name: document.getElementById('reg-name').value,
+                    email: document.getElementById('reg-email').value
+                };
+                localStorage.setItem('astral_user', JSON.stringify(userData));
+                applyLogin(userData);
+                closeM('modal-code');
+            } else {
+                alert("Невірний код! Спробуй 1234");
+            }
+        }
+
+        function applyLogin(data) {
+            document.getElementById('btn-login').style.display = 'none';
+            document.getElementById('nav-disc').style.display = 'none';
+            document.getElementById('nav-prof').style.display = 'inline-block';
+            document.getElementById('prof-name').innerText = data.name;
+            document.getElementById('prof-email').innerText = data.email;
+        }
+
+        function logout() {
+            localStorage.removeItem('astral_user');
+            location.reload();
+        }
+    </script>
+</body>
+</html>
