@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,7 +81,7 @@
 
         .price-val { font-size: 40px; font-weight: 900; margin: 15px 0; color: var(--accent); }
 
-        /* Модальне вікно */
+        /* Модальное окно */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; }
         .modal-content { background: #1a1a1a; color: white; width: 420px; padding: 40px; border-radius: 24px; text-align: center; position: relative; border: 1px solid var(--border); }
         .buy-link { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 18px; margin: 12px 0; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: white; font-weight: 800; transition: 0.3s; }
@@ -113,13 +113,13 @@
     <section class="hero">
         <h1>SMOKE <span style="color: var(--accent);">CLIENT</span></h1>
         <p style="opacity: 0.5; font-weight: 600; letter-spacing: 1px; margin-top: 10px;">NEXT GENERATION CHEAT TOOL</p>
-        <button class="btn-buy-main" onclick="openM()">Купити</button>
+        <button class="btn-buy-main" onclick="openM()">Купить</button>
     </section>
 
     <div class="pricing-section" id="prices">
         <div class="pricing-grid">
             <div class="price-card card-30">
-                <h3>30 ДНІВ</h3>
+                <h3>30 ДНЕЙ</h3>
                 <div class="price-val">299 ₽</div>
                 <small style="opacity:0.5">₴155 | $3.69</small>
             </div>
@@ -132,7 +132,7 @@
             </div>
 
             <div class="price-card card-year">
-                <h3>1 РІК</h3>
+                <h3>1 ГОД</h3>
                 <div class="price-val">449 ₽</div>
                 <small style="opacity:0.5">₴230 | $5.55</small>
             </div>
@@ -147,21 +147,21 @@
 
     <div class="modal" id="modal-buy">
         <div class="modal-content">
-            <h2 style="margin-bottom: 25px; font-weight: 900; color: var(--accent);">СПОСОБИ КУПІВЛІ</h2>
+            <h2 style="margin-bottom: 25px; font-weight: 900; color: var(--accent);">СПОСОБЫ ПОКУПКИ</h2>
             
             <a href="https://funpay.com/users/12045083/" target="_blank" class="buy-link fp">
-                <i class="fa-solid fa-cart-shopping"></i> FUNPAY (Автовидача)
+                <i class="fa-solid fa-cart-shopping"></i> FUNPAY (Автовыдача)
             </a>
             
             <a href="https://t.me/Kopyy123" target="_blank" class="buy-link tg">
-                <i class="fa-brands fa-telegram"></i> TELEGRAM (Адмін)
+                <i class="fa-brands fa-telegram"></i> TELEGRAM (Админ)
             </a>
 
             <a href="https://discord.gg/nCB3WsvfME" target="_blank" class="buy-link ds">
-                <i class="fa-brands fa-discord"></i> DISCORD (Підтримка)
+                <i class="fa-brands fa-discord"></i> DISCORD (Поддержка)
             </a>
 
-            <button onclick="closeM()" style="margin-top:20px; background:none; border:none; color:gray; cursor:pointer; font-weight: 700; text-transform: uppercase; font-size: 12px;">[ Закрити вікно ]</button>
+            <button onclick="closeM()" style="margin-top:20px; background:none; border:none; color:gray; cursor:pointer; font-weight: 700; text-transform: uppercase; font-size: 12px;">[ Закрыть окно ]</button>
         </div>
     </div>
 
